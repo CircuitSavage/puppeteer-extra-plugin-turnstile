@@ -1,0 +1,54 @@
+{
+  "name": "puppeteer-extra-plugin-turnstile",
+  "version": "1.0.0",
+  "description": "puppeteer-extra plugin that auto-solves Cloudflare Turnstile via the Peak API. Reads the sitekey, gets a token, injects it, and fires the widget callback.",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "puppeteer",
+    "puppeteer-extra",
+    "puppeteer-extra-plugin",
+    "cloudflare",
+    "turnstile",
+    "captcha",
+    "solver",
+    "bypass",
+    "cf-turnstile",
+    "anti-bot"
+  ],
+  "author": "Peak (peak.fo)",
+  "license": "MIT",
+  "homepage": "https://peak.fo/?utm_source=github&utm_medium=readme&utm_campaign=packages&utm_content=puppeteer-extra-plugin-turnstile",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CircuitSavage/puppeteer-extra-plugin-turnstile.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CircuitSavage/puppeteer-extra-plugin-turnstile/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "src",
+    "assets",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "puppeteer-extra": ">=3",
+    "puppeteer-extra-plugin": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "puppeteer-extra": {
+      "optional": true
+    },
+    "puppeteer-extra-plugin": {
+      "optional": true
+    }
+  }
+}
