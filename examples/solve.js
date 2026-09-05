@@ -15,6 +15,7 @@ puppeteer.use(
   Turnstile({
     apiKey: process.env.PEAK_API_KEY // defaults to this env var anyway
     // proxy: 'http://user:pass@ip:port',  // optional
+    // appId: process.env.PEAK_APP_ID,     // optional: earn 5% solve credit (peak.fo/earn)
   })
 )
 

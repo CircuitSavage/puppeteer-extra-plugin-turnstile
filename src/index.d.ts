@@ -3,6 +3,8 @@
 export interface TurnstilePluginOptions {
   /** Peak API key (pk_...). Defaults to process.env.PEAK_API_KEY. */
   apiKey?: string
+  /** Peak app id to credit for revenue share on each solve. Defaults to process.env.PEAK_APP_ID. */
+  appId?: string
   /** Optional proxy, e.g. http://user:pass@ip:port. */
   proxy?: string
   /** CSS selector for the Turnstile widget. Defaults to ".cf-turnstile". */

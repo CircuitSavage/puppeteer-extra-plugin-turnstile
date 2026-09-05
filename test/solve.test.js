@@ -93,6 +93,84 @@ test('solveWithPeak includes proxy when provided', async function () {
   assert.equal(body.proxy, 'http://user:pass@1.2.3.4:8080')
 })
 
+test('solveWithPeak omits appId when not provided', async function () {
+  const fetchImpl = makeFetch({ success: true, data: { token: TEST_TOKEN } })
+  await solveWithPeak({
+    apiKey: 'pk_test_key',
+    sitekey: SAMPLE_SITEKEY,
+    url: PAGE_URL,
+    fetchImpl: fetchImpl
+  })
+  const body = JSON.parse(fetchImpl.calls[0].init.body)
+  assert.equal('appId' in body, false)
+})
+
+test('solveWithPeak includes appId when provided', async function () {
+  const fetchImpl = makeFetch({ success: true, data: { token: TEST_TOKEN } })
+  await solveWithPeak({
+    apiKey: 'pk_test_key',
+    sitekey: SAMPLE_SITEKEY,
+    url: PAGE_URL,
+    appId: 'app_test_id',
+    fetchImpl: fetchImpl
+  })
+  const body = JSON.parse(fetchImpl.calls[0].init.body)
+  assert.equal(body.appId, 'app_test_id')
+})
+
+test('solveTurnstile threads appId into the Peak payload', async function () {
+  const fetchImpl = makeFetch({ success: true, data: { token: TEST_TOKEN } })
+  const page = makeFakePage()
+
+  await solveTurnstile(page, {
+    apiKey: 'pk_test_key',
+    appId: 'app_test_id',
+    fetchImpl: fetchImpl
+  })
+
+  const body = JSON.parse(fetchImpl.calls[0].init.body)
+  assert.equal(body.appId, 'app_test_id')
+})
+
+test('solveTurnstile falls back to PEAK_APP_ID for appId', async function () {
+  const saved = process.env.PEAK_APP_ID
+  process.env.PEAK_APP_ID = 'app_from_env'
+  try {
+    const fetchImpl = makeFetch({ success: true, data: { token: TEST_TOKEN } })
+    const page = makeFakePage()
+
+    await solveTurnstile(page, {
+      apiKey: 'pk_test_key',
+      fetchImpl: fetchImpl
+    })
+
+    const body = JSON.parse(fetchImpl.calls[0].init.body)
+    assert.equal(body.appId, 'app_from_env')
+  } finally {
+    if (saved === undefined) delete process.env.PEAK_APP_ID
+    else process.env.PEAK_APP_ID = saved
+  }
+})
+
+test('solveTurnstile omits appId when neither option nor env is set', async function () {
+  const saved = process.env.PEAK_APP_ID
+  delete process.env.PEAK_APP_ID
+  try {
+    const fetchImpl = makeFetch({ success: true, data: { token: TEST_TOKEN } })
+    const page = makeFakePage()
+
+    await solveTurnstile(page, {
+      apiKey: 'pk_test_key',
+      fetchImpl: fetchImpl
+    })
+
+    const body = JSON.parse(fetchImpl.calls[0].init.body)
+    assert.equal('appId' in body, false)
+  } finally {
+    if (saved !== undefined) process.env.PEAK_APP_ID = saved
+  }
+})
+
 test('solveWithPeak throws on a failure response', async function () {
   const fetchImpl = makeFetch({ success: false, error: 'insufficient balance' })
   await assert.rejects(

@@ -22,6 +22,7 @@ class TurnstilePlugin extends PuppeteerExtraPlugin {
   get defaults () {
     return {
       apiKey: process.env.PEAK_API_KEY,
+      appId: process.env.PEAK_APP_ID,
       proxy: undefined,
       selector: undefined,
       autoSolve: false,

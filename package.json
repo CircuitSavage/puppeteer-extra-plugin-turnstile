@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-extra-plugin-turnstile",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "puppeteer-extra plugin that auto-solves Cloudflare Turnstile via the Peak API. Reads the sitekey, gets a token, injects it, and fires the widget callback.",
   "main": "src/index.js",
   "types": "src/index.d.ts",

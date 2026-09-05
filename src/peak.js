@@ -24,6 +24,7 @@ const DEFAULT_ENDPOINT = 'https://api.peak.fo/solve'
  * @param {string} [opts.action]  Optional Turnstile action.
  * @param {string} [opts.cData]   Optional Turnstile cData.
  * @param {string} [opts.pageData] Optional Turnstile pagedata (chlPageData).
+ * @param {string} [opts.appId]    Optional Peak app id to credit for revenue share.
  * @param {string} [opts.endpoint] Override the Peak endpoint (tests/self-hosted).
  * @param {Function} [opts.fetchImpl] Override fetch (tests). Defaults to global fetch.
  * @returns {Promise<string>} The solved Turnstile token.
@@ -37,6 +38,7 @@ async function solveWithPeak (opts) {
     action,
     cData,
     pageData,
+    appId,
     endpoint = DEFAULT_ENDPOINT,
     fetchImpl
   } = opts || {}
@@ -55,6 +57,7 @@ async function solveWithPeak (opts) {
   if (action) body.action = action
   if (cData) body.cdata = cData
   if (pageData) body.pagedata = pageData
+  if (appId) body.appId = appId
 
   const res = await doFetch(endpoint, {
     method: 'POST',

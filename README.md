@@ -71,6 +71,7 @@ Pass options to the factory, or override any of them per call in `page.solveTurn
 | Option        | Default                    | Description                                             |
 | ------------- | -------------------------- | ------------------------------------------------------- |
 | `apiKey`      | `process.env.PEAK_API_KEY` | Peak API key (`pk_...`).                                 |
+| `appId`       | `process.env.PEAK_APP_ID`  | Peak app id to credit for revenue share (see below).    |
 | `proxy`       | `undefined`                | Optional proxy `http://user:pass@ip:port`.              |
 | `selector`    | `.cf-turnstile`            | CSS selector for the widget.                            |
 | `autoSolve`   | `false`                    | Solve automatically after each page load.               |
@@ -85,6 +86,19 @@ const token = await page.solveTurnstile({
   proxy: 'http://user:pass@1.2.3.4:8080'
 })
 ```
+
+## Earn with your app ID
+
+Pass your Peak app id and you earn 5% of every solve this tool makes, paid as solve credit. Set it once via the `appId` option or the `PEAK_APP_ID` environment variable. It is optional and only affects who gets credited; it does not change whether a solve succeeds or how fast it runs.
+
+```js
+puppeteer.use(Turnstile({
+  apiKey: process.env.PEAK_API_KEY,
+  appId: 'app_your_id' // or set PEAK_APP_ID
+}))
+```
+
+Create an app id at [peak.fo/dashboard/developer](https://peak.fo/dashboard/developer). Details: [peak.fo/earn](https://peak.fo/earn).
 
 ## How it works
 

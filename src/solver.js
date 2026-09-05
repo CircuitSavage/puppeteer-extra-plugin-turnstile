@@ -98,6 +98,7 @@ async function injectToken (page, token) {
  * @param {string} [opts.url]      Defaults to page.url().
  * @param {string} [opts.selector] CSS selector for the widget.
  * @param {string} [opts.action] / [opts.cData] / [opts.pageData]
+ * @param {string} [opts.appId]    Peak app id to credit. Defaults to process.env.PEAK_APP_ID.
  * @param {string} [opts.endpoint] / [opts.fetchImpl]  (tests)
  * @returns {Promise<string>} The solved token.
  */
@@ -121,6 +122,7 @@ async function solveTurnstile (page, opts) {
     action: opts.action,
     cData: opts.cData,
     pageData: opts.pageData,
+    appId: opts.appId || process.env.PEAK_APP_ID,
     endpoint: opts.endpoint,
     fetchImpl: opts.fetchImpl
   })
